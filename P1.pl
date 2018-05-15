@@ -20,3 +20,35 @@ bruder(X,Y) :- vater(Z,X), vater(Z,Y), maennlich(Y), X\=Y.
 %bruder(X,Y) :- mutter(Z,X), mutter(Z,Y), maennlich(Y).
 schwester(X,Y) :- vater(Z,X), vater(Z,Y), weiblich(Y), X\=Y.
 %schwester(X,Y) :- mutter(Z,X), mutter(Z,Y), weiblich(Y).
+
+
+
+
+
+
+
+
+
+linListe(nil).
+linListe(list(X,Xs)) :- linListe(Xs).
+
+
+head(list(X,Xs),X).
+tail(list(X,Xs),Xs).
+app(nil,X,X).
+app(list(X,Xs),list(Y,Ys), list(X, Ws)) :- app(Xs,list(Y,Ys),Ws).
+
+praefix(Xs,Ys) :- app(Xs,Rs,Ys).
+suffix(Xs,Ys) :- app(Rs,Xs,Ys).
+infix(Xs,Ys) :- app(Rs,Xs,Ws), app(Ws,Rs2,Ys), Rs\=nil, Rs2\=nil, Xs\=nil.
+
+member1(X,list(X,Xs)). :- linListe(Xs).
+member1(X,list(Y,Ys)) :- member1(X,Ys), linListe(Ys).
+
+binbaum(nil).
+binbaum(baum(X,Lb,Rb)) :- binbaum(Lb), binbaum(Rb).
+root(baum(X,Lb,Rb),X) :- binbaum(Lb), binbaum(Rb).
+
+construct(Root,Lb,Rb,baum(Root,Lb,Rb)) :- binbaum(Lb), binbaum(Rb).
+knotenanz(nil,N).
+knotenanz(baum(X,Lb,Rb),s(N)) :- knotenanz(Lb,N), knotenanz(Rb,N).
