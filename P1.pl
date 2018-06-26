@@ -77,3 +77,45 @@ postorder(n(X,Lb,Rb),Ys) :- append(Ys3,[X],Ys), append(Ys1,Ys2,Ys3), postorder(L
 roots([],[]).
 roots([e|Ls],Ys) :- roots(Ls,Ys).
 roots([n(X,Lb,Rb)|Ls],Ys) :- append([X],Ys1,Ys), roots(Ls,Ys1).
+
+
+
+
+removeLastElement([],[]).
+removeLastElement([_],[]).
+removeLastElement([X|Xs],[X|Xs2]) :- removeLastElement(Xs,Xs2).
+
+
+
+
+%P5
+% L= {a^n b^n | n > 0}
+
+z(z0).
+z(z1).
+sigma(a).
+sigma(b).
+gamma(a).
+gamma(s).
+kellersymbol(s).
+start(z0).
+
+delta(z0, [a], [s], z0, [a,s]).
+delta(z0, [a], [a], z0, [a,a]).
+delta(z0, [b], [a], z1, []).
+delta(z1, [b], [a], z1, []).
+delta(z1, [nix], [s], z1, []).
+
+
+
+
+es(Z,[],[]).
+es(Z,Xs,[K|Ks]) :- delta(Z,[nix],[K],Zn,Kns), append(Kns,Ks,Kns2), es(Zn,Xs,Kns2).
+es(Z,[X|Xs],[K|Ks]) :- delta(Z,[X],[K],Zn,Kns), append(Kns,Ks,Kns2), es(Zn,Xs,Kns2).
+
+sigma_stern([]).
+sigma_stern([X|Ys]) :- sigma(X), sigma_stern(Ys).
+
+
+lvonM(Ws) :-start(Zs), kellersymbol(K), es(Zs,Ws,[K]).
+
